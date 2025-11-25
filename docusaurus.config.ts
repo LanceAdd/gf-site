@@ -1,4 +1,4 @@
-const LATEST_VERSION_LABEL = '2.8.x(Latest)';
+const LATEST_VERSION_LABEL = '2.9.x(Latest)';
 
 import type { Options as IdealImageOptions } from '@docusaurus/plugin-ideal-image';
 import type * as Preset from '@docusaurus/preset-classic';
@@ -6,16 +6,20 @@ import type { Config } from '@docusaurus/types';
 import { themes as prismThemes } from 'prism-react-renderer';
 
 function geti18nTitle() {
-  switch(process.env.DOCUSAURUS_CURRENT_LOCALE) {
-    case "en": return "GoFrame - A powerful framework for faster, easier, and more efficient project development";
-    default: return "GoFrame官网 - 类似PHP-Laravel,Java-SpringBoot的Go语言开发框架";
+  switch (process.env.DOCUSAURUS_CURRENT_LOCALE) {
+    case 'en':
+      return 'GoFrame - A powerful framework for faster, easier, and more efficient project development';
+    default:
+      return 'GoFrame官网 - 类似PHP-Laravel,Java-SpringBoot的Go语言开发框架';
   }
 }
 
 function getFooterFollowUs() {
-  switch(process.env.DOCUSAURUS_CURRENT_LOCALE) {
-    case "en": return "Follow Us On WeChat";
-    default: return "微信关注我们";
+  switch (process.env.DOCUSAURUS_CURRENT_LOCALE) {
+    case 'en':
+      return 'Follow Us On WeChat';
+    default:
+      return '微信关注我们';
   }
 }
 
@@ -52,6 +56,12 @@ const config: Config = {
   future: {
     experimental_faster: true,
   },
+  // 启用 Markdown 中的 Mermaid 支持
+  markdown: {
+    mermaid: true,
+  },
+  // 配置 Mermaid 主题
+  themes: ['@docusaurus/theme-mermaid'],
   presets: [
     [
       'classic',
@@ -113,7 +123,7 @@ const config: Config = {
     ],
     colorMode: {
       defaultMode: 'light',
-      disableSwitch: true,
+      disableSwitch: false,
       respectPrefersColorScheme: false,
     },
     zoom: {
@@ -134,59 +144,64 @@ const config: Config = {
       },
       items: [
         {
-          sidebarId: 'quickSidebar',
-          position: 'left',
           label: '快速开始',
-          to: '/quick/install',
+          position: 'left',
+          type: 'docSidebar',
+          sidebarId: 'quickSidebar',
         },
         {
-          position: 'left',
           label: '开发手册',
+          position: 'left',
+          type: 'docSidebar',
           sidebarId: 'mainSidebar',
-          to: '/docs/core',
         },
         {
-          sidebarId: 'courseSidebar',
+          label: '功能示例',
           position: 'left',
+          type: 'docSidebar',
+          sidebarId: 'examplesSidebar',
+        },
+        {
+          label: '发布记录',
+          position: 'left',
+          type: 'docSidebar',
+          sidebarId: 'releaseSidebar',
+        },
+        {
           label: '社区教程',
+          position: 'left',
           to: '/course',
           items: [
             {
-              sidebarId: 'courseSidebar',
               label: '视频入门教程',
+              // sidebarId: 'courseSidebar',
               to: '/course/bilibili-video',
             },
             {
-              sidebarId: 'courseStarBookSidebar',
               label: '入门实战教程-星辰英语本',
+              // sidebarId: 'courseStarBookSidebar',
               to: '/course/starbook',
             },
             {
-              sidebarId: 'courseProximaBookSidebar',
               label: '微服务实战教程-比邻英语本',
+              // sidebarId: 'courseProximaBookSidebar',
               to: '/course/proxima-book',
             },
           ],
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'examplesSidebar',
+          label: '社区案例',
           position: 'left',
-          label: '代码示例',
-        },
-        {to: 'showcase', label: '案例展示', position: 'left'},
-        {
-          type: 'docSidebar',
-          sidebarId: 'releaseSidebar',
-          position: 'left',
-          label: '发布记录',
+          to: '/showcase',
         },
         {
-          sidebarId: 'communitySidebar',
+          label: '社区交流',
           position: 'left',
-          label: '开源社区',
           to: '/share/group',
+          activeBaseRegex: `share|articles|supportus`,
         },
+
+        // 右边导航栏
         {
           type: 'docsVersionDropdown',
           position: 'right',
@@ -206,7 +221,7 @@ const config: Config = {
     // toc目录层级显示设置
     tableOfContents: {
       minHeadingLevel: 2,
-      maxHeadingLevel: 4,
+      maxHeadingLevel: 3,
     },
     footer: {
       links: [
@@ -214,7 +229,7 @@ const config: Config = {
           title: getFooterFollowUs(),
           items: [
             {
-              html: '<img src="/img/wechat.jpg" width="110" />'
+              html: '<img src="/img/wechat.jpg" width="110" />',
             },
           ],
         },
@@ -224,7 +239,7 @@ const config: Config = {
     // 代码块配置
     prism: {
       theme: prismThemes.okaidia,
-      darkTheme: prismThemes.dracula,
+      darkTheme: prismThemes.vsDark,
       defaultLanguage: 'go',
       additionalLanguages: ['bash', 'javascript', 'toml', 'ini'], // 添加语言
       // 默认支持的语言 https://github.com/FormidableLabs/prism-react-renderer/blob/master/packages/generate-prism-languages/index.ts#L9-L23
@@ -260,10 +275,10 @@ const config: Config = {
       src: 'https://hm.baidu.com/hm.js?38f38a0626fd7805722db06243cd0fa7',
       async: true,
     },
-    // {
-    //   src: '/ad.js',
-    //   async: true,
-    // },
+    {
+      src: 'https://cdn.wwads.cn/js/makemoney.js',
+      async: true,
+    },
   ],
 };
 

@@ -70,6 +70,38 @@ D:\Program Files\Go\bin\pkg\mod\github.com\gogf\gf@v1.16.6\net\ghttp\internal\cl
 
 解决办法，升级 `gf` 依赖到 `v1.16.9` 再 `go mod tidy`
 
+### 3、升级引起兼容性报错 ..\..\net\ghttp\ghttp_server.go:300:9: table.SetHeader undefined (type *tablewriter.Table has no field or method SetHeader)
+
+使用`go get -u`导致间接依赖版本提升，出现如下的报错。
+>..\..\net\ghttp\ghttp_server.go:300:9: table.SetHeader undefined (type *tablewriter.Table has no field or method SetHeader)
+..\..\net\ghttp\ghttp_server.go:301:9: table.SetRowLine undefined (type *tablewriter.Table has no field or method SetRowLine)
+..\..\net\ghttp\ghttp_server.go:302:9: table.SetBorder undefined (type *tablewriter.Table has no field or method SetBorder)
+..\..\net\ghttp\ghttp_server.go:303:9: table.SetCenterSeparator undefined (type *tablewriter.Table has no field or method SetCenterSeparator)
+
+原因：
+
+使用`go get -u`命令升级了，如"github.com/gogf/gf/contrib/drivers/mysql/v2"这样的依赖了"github.com/gogf/gf/v2"主库的组件，会导致间接依赖被同时升级到最新版本。
+
+间接依赖被升级到最新版本后，如果间接依赖不兼容的旧版就会报错。
+
+解决方式：
+```bash
+// linux
+go list -m -f '{{if and .Indirect (not .Main)}}{{.Path}}{{end}}' all | xargs -I {} go mod edit -droprequire={} && go mod tidy
+
+// windows cmd
+(FOR /F "tokens=*" %G IN ('go list -m -f "{{if and .Indirect (not .Main)}}{{.Path}}{{end}}" all') DO @go mod edit -droprequire=%G) & go mod tidy
+
+// 以上方式还不能解决的时候，手动修改 go.mod 的版本号降级，然后执行 go mod tidy
+// 例如
+// 将 go.mod 文件中的 tablewriter 依赖版本从较高版本降级为 v0.0.5：
+// 修改前（go.mod 部分）:
+// github.com/olekukonko/tablewriter v1.0.9 // indirect
+// 修改后（go.mod 部分）:
+// github.com/olekukonko/tablewriter v0.0.5 // indirect
+// 保存 go.mod 后，执行 go mod tidy 以更新依赖。
+```
+
 ## 三、数据库相关
 
 请参考章节： [ORM常见问题](核心组件/数据库ORM/ORM常见问题.md)

@@ -1,7 +1,7 @@
 ---
 slug: '/docs/web/api-document-swagger-ui'
 title: '接口文档-自定义UI'
-sidebar_position: 1
+sidebar_position: 3000
 hide_title: true
 keywords: [GoFrame,GoFrame框架,SwaggerUI,接口文档,OpenAPI,UI模板,自定义接口,gogf,API文档,Redoc]
 description: '在GoFrame框架中使用SwaggerUI自定义接口文档UI，以替代默认的Redoc组件UI。通过示例代码展示如何快速实现接口文档的替换，连接企业内部资源，避免外网依赖。详细演示了接口文档与第三方平台的对接，使用GoFrame Server进行UI模板切换，提升文档展示灵活性及可定制性。'
@@ -12,10 +12,8 @@ description: '在GoFrame框架中使用SwaggerUI自定义接口文档UI，以替
 `GoFrame` 的 `Server` 默认自带的 `OpenAPI` 接口文档UI是 `redoc` 开源组件，该组件不支持页面 `Try It Out` 功能的。很多同学都在问，能否使用 `SwaggerUI` 页面来展示 `OpenAPI` 接口文档？有的企业内部并不支持连接外网的部分资源，那么能否将内部的接口文档UI替换为内部可访问的资源呢？
 
 了解 `OpenAPI` 这个东东的小伙伴应该都知道， `OpenAPI` 只是通用的接口定义规范，而展示的接口文档UI是可以随便替换的，
-并且这种UI界面以及平台还特别多！使用 `GoFrame Server` 来切换接口文档UI页面，
-或者将接口文档对接到第三方接口文档平台 - **非常简单！详见示例：
-[gf/example/httpserver/swagger-set-template/main.go](https://github.com/gogf/gf/blob/master/example/httpserver/swagger-set-template/main.go)**
-
+并且这种`UI`界面以及平台还特别多！使用 `GoFrame Server` 来切换接口文档UI页面，
+或者将接口文档对接到第三方接口文档平台非常简单！
 ## 使用示例
 
 咱们通过代码来展示一下，如何快速地将接口文档UI切换为 `SwaggerUI`。 `SwaggerUI` 的相关链接：
